@@ -74,11 +74,11 @@
 #define MASK_2BIT 0x03
 #define MASK_1BIT 0x01
 
-#define TP_VENDOR_WINTEK    1	//wintek
-#define TP_VENDOR_TPK       2	//TPK
-#define TP_VENDOR_TRULY     3	//truly
-#define TP_VENDOR_YOUNGFAST 4   //youngfast
-#define TP_VENDOR_TPK_GFF   5   //Tpk gff
+
+#define TP_VENDOR_WINTEK	1	//胜华
+#define TP_VENDOR_TPK		2	//TPK
+#define TP_VENDOR_TRULY		3	//信利
+#define TP_VENDOR_YOUNGFAST 4   //洋华
 
 //#define SYNC_RMI4_PWR
 
@@ -236,8 +236,8 @@ struct synaptics_rmi4_data {
 	unsigned short f01_cmd_base_addr;
 	unsigned short f01_ctrl_base_addr;
 	unsigned short f01_data_base_addr;
-	unsigned short holstere_mode_control_addr;
-	unsigned char holstere_mode_open_or_close;
+	unsigned short holster_mode_control_addr;
+	unsigned short holster_mode_open_or_close;
 	unsigned int firmware_id;
 	int irq;
 	int sensor_max_x;
@@ -279,14 +279,17 @@ struct synaptics_rmi4_data {
 	unsigned short f54_ctrl_base_addr;
 	unsigned short f54_data_base_addr;
 	unsigned char gesturemode;
-	bool gesture;
 	bool pwrrunning;
 	unsigned int old_status;
 	unsigned int reset_count; //for reset count
 	unsigned short points[2*7];
 	struct mutex ops_lock;
 	struct notifier_block fb_notif;
-	unsigned char gesture_enable;
+	atomic_t syna_use_gesture;
+	atomic_t double_tap_enable;
+	atomic_t camera_enable;
+	atomic_t music_enable;
+	atomic_t flashlight_enable;
 	unsigned char glove_enable;  //glove mode
 	unsigned char pdoze_enable;  //pdoze mode
 	unsigned char smartcover_enable;  //smartcover mode
@@ -295,8 +298,6 @@ struct synaptics_rmi4_data {
 	unsigned char bcontinue;
 	struct workqueue_struct *reportqueue;  //for work queue
 	struct work_struct reportwork;
-	struct delayed_work  speed_up_work;//mingqiang.guo add for LCD show later when push power button  and  two click  in gesture  
-	struct workqueue_struct *speedup_resume_wq;  
 };
 
 enum exp_fn {

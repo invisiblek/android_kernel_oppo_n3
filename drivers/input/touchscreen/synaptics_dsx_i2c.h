@@ -79,6 +79,7 @@
 #define TP_VENDOR_TPK		2	//TPK
 #define TP_VENDOR_TRULY		3	//ÐÅÀû
 #define TP_VENDOR_YOUNGFAST 4   //Ñó»ª
+#define TP_VENDOR_TPK_GFF	5   //Tpk gff
 
 //#define SYNC_RMI4_PWR
 
